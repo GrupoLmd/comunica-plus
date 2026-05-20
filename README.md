@@ -1,2 +1,4 @@
 # comunica-plus
 MVP do projeto Comunica
+# Migration
+Esta migration cria a tabela usuarios no banco de dados do sistema Comunica Plus, contendo os campos id, nome, email (único), senha, perfil (com valores possíveis: aluno, gestão e psicopedagoga), escola, turma e serie (opcionais), além do campo status (ativo ou inativo, com padrão ativo) e os timestamps created_at e updated_at. Ela define a estrutura básica de usuários do sistema, permitindo o controle de diferentes tipos de acesso e informações acadêmicas associadas, enquanto o método down() realiza a remoção da tabela em caso de rollback da migration.
