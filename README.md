@@ -18,3 +18,34 @@ Este código é uma migration do Laravel que cria a tabela progresso_trilhas, de
 Este código é uma migration do Laravel que cria a tabela sinalizacoes_pedagogicas, utilizada para registrar alertas ou acompanhamentos pedagógicos relacionados aos usuários. A tabela possui chaves estrangeiras que vinculam cada sinalização a um usuário (usuarios) e a um resultado de triagem (resultados_triagem), ambas com exclusão em cascata para manter a integridade dos dados. Os campos incluem nivel_atencao (enum com valores baixo, moderado ou alto, padrão baixo), motivo (texto explicando a razão da sinalização), origem (enum que indica se a sinalização veio da triagem ou de uma analise_psicopedagogica, padrão triagem) e status (enum que acompanha o andamento: novo, em_acompanhamento ou finalizado, padrão novo). Também são adicionados os timestamps padrão (created_at e updated_at). O método down garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
 # Oportunidades
 Este código é uma migration do Laravel que cria a tabela oportunidades, destinada a registrar eventos, avisos ou competições relevantes para os usuários. A tabela inclui campos como titulo (nome da oportunidade), descricao (texto opcional explicativo), categoria (enum que pode ser olimpiada, competicao ou aviso, com padrão aviso), além de data_inicio e data_fim (datas opcionais para delimitar o período da oportunidade). Também há o campo orientacao (texto opcional com instruções ou recomendações) e ativo (booleano que indica se a oportunidade está disponível, padrão true). Os timestamps padrão (created_at e updated_at) são adicionados automaticamente. O método down garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
+# Configuração Vite + React + Tailwind CSS
+-Responsável por configurar a base global de estilos da aplicação.
+-Define tipografia padrão do sistema.
+-Define cores globais da interface.
+-Configura o tema visual dark mode da aplicação.
+-Melhora renderização e legibilidade dos textos.
+-Suaviza fontes em diferentes navegadores.
+-Padroniza dimensionamento dos elementos da interface.
+-Remove estilos padrões do navegador.
+-Define estrutura visual principal da aplicação.
+-Garante melhor responsividade em diferentes dispositivos.
+-Estabelece uma base moderna para React + Vite + Tailwind CSS.
+-Melhora organização visual e consistência da interface.
+-Prepara a aplicação para estilização escalável e otimizada.
+# Configuração Global de Estilos
+-Configuração Global de Estilos
+Responsável pela padronização visual e estrutural da aplicação.
+-Importação do Tailwind CSS
+Responsável pela integração do Tailwind CSS ao sistema de estilização.
+-Configuração Global (:root)
+Responsável pelas definições globais de tipografia, cores e renderização visual.
+-Renderização de Texto
+Responsável pela melhoria de legibilidade e suavização das fontes.
+-Reset Global (*)
+Responsável pela padronização de dimensionamento dos elementos da interface.
+-Configuração do body
+Responsável pela estrutura visual principal da aplicação.
+-Tema Escuro da Interface
+Responsável pela definição do padrão visual dark mode da aplicação.
+-Responsividade Base
+Responsável pela adaptação mínima da interface em diferentes dispositivos.
