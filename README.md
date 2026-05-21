@@ -27,3 +27,17 @@ Este código é uma migration do Laravel que cria a tabela oportunidades, destin
 -Permite exibição das páginas do sistema.
 -Centraliza a navegação da aplicação.
 -Exporta o componente principal do frontend.
+# Componente Sidebar
+-Responsável pela navegação lateral da aplicação.
+-NavLink
+Responsável pela navegação entre páginas utilizando React Router DOM.
+-Logo da Aplicação
+Responsável pela identidade visual exibida na sidebar.
+-Links de Navegação
+Responsáveis pelo acesso às páginas Dashboard, Alunos e Professores.
+-Estilização Dinâmica
+Responsável pelo destaque automático da rota ativa.
+-Estrutura Visual
+Responsável pela organização lateral e alinhamento do menu.
+-Objetivo do Componente
+Responsável por melhorar navegação, organização visual e experiência do usuário.
