@@ -18,3 +18,13 @@ Este código é uma migration do Laravel que cria a tabela progresso_trilhas, de
 Este código é uma migration do Laravel que cria a tabela sinalizacoes_pedagogicas, utilizada para registrar alertas ou acompanhamentos pedagógicos relacionados aos usuários. A tabela possui chaves estrangeiras que vinculam cada sinalização a um usuário (usuarios) e a um resultado de triagem (resultados_triagem), ambas com exclusão em cascata para manter a integridade dos dados. Os campos incluem nivel_atencao (enum com valores baixo, moderado ou alto, padrão baixo), motivo (texto explicando a razão da sinalização), origem (enum que indica se a sinalização veio da triagem ou de uma analise_psicopedagogica, padrão triagem) e status (enum que acompanha o andamento: novo, em_acompanhamento ou finalizado, padrão novo). Também são adicionados os timestamps padrão (created_at e updated_at). O método down garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
 # Oportunidades
 Este código é uma migration do Laravel que cria a tabela oportunidades, destinada a registrar eventos, avisos ou competições relevantes para os usuários. A tabela inclui campos como titulo (nome da oportunidade), descricao (texto opcional explicativo), categoria (enum que pode ser olimpiada, competicao ou aviso, com padrão aviso), além de data_inicio e data_fim (datas opcionais para delimitar o período da oportunidade). Também há o campo orientacao (texto opcional com instruções ou recomendações) e ativo (booleano que indica se a oportunidade está disponível, padrão true). Os timestamps padrão (created_at e updated_at) são adicionados automaticamente. O método down garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
+# getDashboardPsicopedagogico
+
+Serviço responsável por buscar os dados do dashboard psicopedagógico através da API.
+
+## Funcionalidades
+
+* Consumo do endpoint psicopedagógico
+* Integração com fetchApi
+* Retorno de dados da API
+* Organização dos serviços da aplicação
