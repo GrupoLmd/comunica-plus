@@ -1,12 +1,12 @@
 💬 Comunica+ - Comunicação, Mentoria e Protagonismo Estudantil
 
-> Plataforma educacional voltada para aproximar estudantes, mentores e gestão escolar, facilitando o pedido de apoio, o acompanhamento pedagógico e o acesso a oportunidades.
+>  Plataforma educacional voltada para aproximar estudantes, mentores e gestão escolar, facilitando o pedido de apoio, o acompanhamento pedagógico e o acesso a oportunidades. 
+![Versão](https://img.shields.io/badge/vers%C3%A3o-1.0.0-blue) ![Status](https://img.shields.io/badge/status-MVP-brightgreen) ![Origem](https://img.shields.io/badge/Do%20Piau%C3%AD%20Para%20O%20Mundo-2026-orange)
 ## 📌 Sobre o Projeto
 
-O **Comunica+** é uma solução educacional criada para apoiar estudantes do ensino médio da rede pública, oferecendo um canal mais acessível para solicitar ajuda, receber orientação e acompanhar trilhas de apoio.
+> O Comunica+ é uma solução educacional que conecta estudantes, gestão escolar, professores e mentores, organizando triagens, trilhas de aprendizagem, oportunidades e acompanhamentos em um único ecossistema digital voltado ao apoio pedagógico no ensino médio.
 
-A proposta busca reduzir barreiras como timidez, falta de acompanhamento individualizado e dificuldade de comunicação entre aluno, escola e mentores.
-
+A proposta busca reduzir barreiras como timidez, falta de acompanhamento individualizado e dificuldade de comunicação entre aluno, escola e mentores
 ---
 
 ## 🎯 Objetivos
@@ -52,22 +52,77 @@ comunica-plus/
 ├── docs/                    # Documentações do projeto
 └── README.md                # Documentação principal
 
-🚀 Como Usar
-1️⃣ Clonar o projeto
-git clone URL_DO_REPOSITORIO
+## 🎮 Como Usar
+
+### 1️⃣ Instalação
+
+Para executar o projeto, primeiro clone o repositório:
+
+```bash
+# Clone o projeto
+git clone https://github.com/GrupoLmd/comunica-plus.git
+
+# Entre na pasta do projeto
+cd comunica-plus
+
 2️⃣ Backend
+# Entre na pasta do backend
 cd backend
+
+# Instale as dependências do Laravel
 composer install
+
+# Copie o arquivo de ambiente
+cp .env.example .env
+
+# Gere a chave da aplicação
+php artisan key:generate
+
+# Execute as migrations
 php artisan migrate
+
+# Inicie o servidor Laravel
 php artisan serve
+O backend ficará disponível em:
+
+http://127.0.0.1:8000
+
 3️⃣ Web
+# Volte para a raiz do projeto
+cd ..
+
+# Entre na pasta web
 cd web
+
+# Instale as dependências
 npm install
+
+# Inicie o projeto
 npm run dev
+A aplicação web ficará disponível em um endereço parecido com:
+
+http://localhost:5173
+
 4️⃣ Mobile
+# Volte para a raiz do projeto
+cd ..
+
+# Entre na pasta mobile
 cd mobile
+
+# Instale as dependências do Flutter
 flutter pub get
+
+# Execute o aplicativo
 flutter run
+5️⃣ Observação
+
+Para o funcionamento completo do MVP, é necessário manter o backend em execução enquanto utiliza os painéis web ou o aplicativo mobile.
+
+No README, esse bloco vai aparecer parecido com o exemplo da imagem: título, subtítulo e caixas escuras de comando.
+
+
+
 🧩 Funcionalidades do MVP
 ✅ Implementadas ou em desenvolvimento
 Cadastro de usuários;
@@ -78,6 +133,7 @@ Estrutura inicial do aplicativo do estudante;
 Organização de trilhas de apoio;
 Registro de dificuldades dos alunos;
 Dashboard para gestão escolar.
+
 🔮 Futuras melhorias
 Integração completa entre web, backend e mobile;
 Sistema de notificações;
@@ -86,6 +142,7 @@ Recomendações automáticas de trilhas;
 Relatórios avançados para gestão;
 Melhorias de acessibilidade;
 Deploy online do MVP.
+
 👥 Perfis de Usuário
 Aluno
 
@@ -138,12 +195,14 @@ feat: cria tela inicial do mentor
 style: ajusta layout do painel
 fix: corrige texto da tela inicial
 chore: organiza estrutura do projeto
+
 🙏 Agradecimentos
 Governo do Estado do Piauí;
 Secretaria de Estado da Educação;
 Organização do SEDUCKATHON;
 Escola participante;
 Professores, orientadores e estudantes envolvidos no desenvolvimento do MVP.
+
 👨‍💻 Componentes
 Nome do aluno: Raniely Inacio de Sousa
 Nome do aluno: Marillia Ferreira do Vale
