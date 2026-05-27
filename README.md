@@ -52,6 +52,9 @@ comunica-plus/
 ├── docs/                    # Documentações do projeto
 └── README.md                # Documentação principal
 
+---
+
+
 ## 🎮 Como Usar
 
 ### 1️⃣ Instalação
