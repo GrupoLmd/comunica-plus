@@ -51,13 +51,13 @@ comunica-plus/
 ├── mobile/                  # Aplicativo do estudante em Flutter
 ├── docs/                    # Documentações do projeto
 └── README.md                # Documentação principal
+```
 
 ---
 
-
 ## 🎮 Como Usar
 
-### 1️⃣ Instalação
+### 1️⃣ Clonar o Projeto
 
 Para executar o projeto, primeiro clone o repositório:
 
@@ -67,8 +67,13 @@ git clone https://github.com/GrupoLmd/comunica-plus.git
 
 # Entre na pasta do projeto
 cd comunica-plus
+```
 
-2️⃣ Backend
+---
+
+### 2️⃣ Backend — Laravel
+
+```bash
 # Entre na pasta do backend
 cd backend
 
@@ -86,11 +91,19 @@ php artisan migrate
 
 # Inicie o servidor Laravel
 php artisan serve
+```
+
 O backend ficará disponível em:
 
+```text
 http://127.0.0.1:8000
+```
 
-3️⃣ Web
+---
+
+### 3️⃣ Web — React + Vite
+
+```bash
 # Volte para a raiz do projeto
 cd ..
 
@@ -102,11 +115,19 @@ npm install
 
 # Inicie o projeto
 npm run dev
+```
+
 A aplicação web ficará disponível em um endereço parecido com:
 
+```text
 http://localhost:5173
+```
 
-4️⃣ Mobile
+---
+
+### 4️⃣ Mobile — Flutter
+
+```bash
 # Volte para a raiz do projeto
 cd ..
 
@@ -118,57 +139,68 @@ flutter pub get
 
 # Execute o aplicativo
 flutter run
-5️⃣ Observação
+```
+
+---
+
+### 5️⃣ Observação
 
 Para o funcionamento completo do MVP, é necessário manter o backend em execução enquanto utiliza os painéis web ou o aplicativo mobile.
 
-No README, esse bloco vai aparecer parecido com o exemplo da imagem: título, subtítulo e caixas escuras de comando.
+---
 
+## 🧩 Funcionalidades do MVP
 
+### ✅ Implementadas ou em desenvolvimento
 
-🧩 Funcionalidades do MVP
-✅ Implementadas ou em desenvolvimento
-Cadastro de usuários;
-Perfis de acesso para aluno, gestão, mentor e psicopedagogo(a);
-Estrutura inicial do backend;
-Painel web para acompanhamento;
-Estrutura inicial do aplicativo do estudante;
-Organização de trilhas de apoio;
-Registro de dificuldades dos alunos;
-Dashboard para gestão escolar.
+- Cadastro de usuários;
+- Perfis de acesso para aluno, gestão, mentor e psicopedagogo(a);
+- Estrutura inicial do backend;
+- Painel web para acompanhamento;
+- Estrutura inicial do aplicativo do estudante;
+- Organização de trilhas de apoio;
+- Registro de dificuldades dos alunos;
+- Dashboard para gestão escolar.
 
-🔮 Futuras melhorias
-Integração completa entre web, backend e mobile;
-Sistema de notificações;
-Recomendações automáticas de trilhas;
-Área de oportunidades educacionais;
-Relatórios avançados para gestão;
-Melhorias de acessibilidade;
-Deploy online do MVP.
+### 🔮 Futuras melhorias
 
-👥 Perfis de Usuário
-Aluno
+- Integração completa entre web, backend e mobile;
+- Sistema de notificações;
+- Recomendações automáticas de trilhas;
+- Área de oportunidades educacionais;
+- Relatórios avançados para gestão;
+- Melhorias de acessibilidade;
+- Deploy online do MVP.
+
+---
+
+## 👥 Perfis de Usuário
+
+### Aluno
 
 Pode solicitar apoio, visualizar trilhas recomendadas e acompanhar oportunidades.
 
-Mentor
+### Mentor
 
 Pode acompanhar alunos, visualizar dificuldades e orientar trilhas de estudo.
 
-Gestão Escolar
+### Gestão Escolar
 
 Pode acompanhar dados gerais, visualizar solicitações e apoiar decisões pedagógicas.
 
-Psicopedagogo(a)
+### Psicopedagogo(a)
 
 Pode visualizar informações de apoio e auxiliar na análise pedagógica dos estudantes.
 
-🔄 Fluxo de Contribuição
+---
+
+## 🔄 Fluxo de Contribuição
 
 Este projeto utiliza GitHub para registrar a participação dos integrantes da equipe.
 
 Fluxo adotado:
 
+```text
 Criar branch
 ↓
 Fazer alteração
@@ -182,34 +214,48 @@ Pull Request
 Revisão
 ↓
 Merge
+```
 
 Padrão de branch:
 
+```text
 feature/nome-da-tarefa
+```
 
 Exemplo:
 
+```text
 feature/backend-migration-usuarios
+```
 
 Padrão de commits:
 
+```text
 docs: adiciona documentação do backend
 feat: cria tela inicial do mentor
 style: ajusta layout do painel
 fix: corrige texto da tela inicial
 chore: organiza estrutura do projeto
+```
 
-🙏 Agradecimentos
-Governo do Estado do Piauí;
-Secretaria de Estado da Educação;
-Organização do SEDUCKATHON;
-Escola participante;
-Professores, orientadores e estudantes envolvidos no desenvolvimento do MVP.
+---
 
-👨‍💻 Componentes
-Nome do aluno: Raniely Inacio de Sousa
-Nome do aluno: Marillia Ferreira do Vale
-Nome do aluno: Luana Marques de Ananias
-Nome do aluno: Luis Miguel Lira Do Nascimento 
-Nome do aluno: Juciele da Silva Santos
-Orientador: Mayke Lombardo
+## 🙏 Agradecimentos
+
+- Governo do Estado do Piauí;
+- Secretaria de Estado da Educação;
+- Organização do SEDUCKATHON;
+- Escola participante;
+- Professores, orientadores e estudantes envolvidos no desenvolvimento do MVP.
+
+---
+
+## 👨‍💻 Componentes
+
+- **Raniely Inacio de Sousa**
+- **Marillia Ferreira do Vale**
+- **Luana Marques de Ananias**
+- **Luis Miguel Lira Do Nascimento**
+- **Juciele da Silva Santos**
+
+**Orientador:** Mayke Lombardo
