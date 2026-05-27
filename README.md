@@ -24,7 +24,68 @@ Serviço responsável por buscar os dados do dashboard de gestão através da AP
 
 ## Funcionalidades
 
-* Consumo do endpoint do dashboard
-* Integração com fetchApi
-* Organização da camada de serviços
-* Retorno de dados da gestão
+- Consumo do endpoint do dashboard
+- Integração com fetchApi
+- Organização da camada de serviços
+- Retorno de dados da gestão
+
+# DashboardGestaoPage
+
+Página responsável pelo carregamento e exibição do dashboard de gestão da aplicação.
+
+## Funcionalidades
+
+- Busca de dados da API
+- Controle de loading
+- Tratamento de erros
+- Integração com Sidebar
+- Estrutura principal do dashboard
+
+# DashboardPsicoPage
+
+Página responsável pela exibição do painel psicopedagógico da aplicação.
+
+## Funcionalidades
+
+- Carregamento de dados da API
+- Controle de loading e erros
+- Exibição de métricas psicopedagógicas
+- Visualização de motivos recorrentes
+- Status de acompanhamento dos alunos
+- Integração com Sidebar e StatCard
+
+# AppRoutes
+
+Componente responsável pelo gerenciamento das rotas da aplicação.
+
+## Funcionalidades
+
+- Configuração de navegação com React Router
+- Redirecionamento da página inicial
+- Rotas para dashboard de gestão
+- Rotas para painel psicopedagógico
+- Navegação entre páginas da aplicação
+
+# getDashboardPsicopedagogico
+
+Serviço responsável por buscar os dados do dashboard psicopedagógico através da API.
+
+## Funcionalidades
+
+- Consumo do endpoint psicopedagógico
+- Integração com fetchApi
+- Retorno de dados da API
+- Organização dos serviços da aplicação
+
+# getAlunosSinalizadosPage
+
+Página responsável pela visualização detalhada dos alunos sinalizados no painel psicopedagógico.
+
+## Funcionalidades
+
+- Carregamento de dados da API
+- Controle de loading e erros
+- Exibição de métricas dos alunos
+- Listagem detalhada de acompanhamento
+- Visualização de níveis de atenção e status
+- Integração com Sidebar
