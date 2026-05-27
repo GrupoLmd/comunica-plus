@@ -28,3 +28,16 @@ Serviço responsável por buscar os dados do dashboard psicopedagógico através
 * Integração com fetchApi
 * Retorno de dados da API
 * Organização dos serviços da aplicação
+
+# getAlunosSinalizadosPage
+
+Página responsável pela visualização detalhada dos alunos sinalizados no painel psicopedagógico.
+
+## Funcionalidades
+
+* Carregamento de dados da API
+* Controle de loading e erros
+* Exibição de métricas dos alunos
+* Listagem detalhada de acompanhamento
+* Visualização de níveis de atenção e status
+* Integração com Sidebar
