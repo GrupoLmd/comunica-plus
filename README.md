@@ -112,7 +112,7 @@ Abaixo estão algumas telas desenvolvidas para o MVP do Comunica+, demonstrando 
 
 Tela principal da gestão escolar, com visão geral dos alunos cadastrados, alunos ativos, trilhas recomendadas, atenção pedagógica, panorama de dificuldades e perfis predominantes de aprendizagem.
 
-![Dashboard da Gestão](docs/screenshots/dashboard-gestao.jpg)
+![Dashboard da Gestão](docs/screenshots/dashboard-gestao.png)
 
 ---
 
