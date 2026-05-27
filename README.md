@@ -120,7 +120,7 @@ Tela principal da gestão escolar, com visão geral dos alunos cadastrados, alun
 
 Tela voltada ao acompanhamento detalhado dos estudantes que apresentaram sinais de atenção pedagógica, exibindo níveis de prioridade, status de acompanhamento, dificuldade identificada, perfil de aprendizagem e motivo da sinalização.
 
-![Alunos Sinalizados](docs/screenshots/alunos-sinalizados.jpg)
+![Alunos Sinalizados](docs/screenshots/alunos-sinalizados.png)
 
 ---
 
@@ -128,7 +128,7 @@ Tela voltada ao acompanhamento detalhado dos estudantes que apresentaram sinais 
 
 Painel psicopedagógico para visualização dos motivos recorrentes nas sinalizações, níveis de atenção e status atual dos alunos em acompanhamento.
 
-![Observatório de Aprendizagem](docs/screenshots/observatorio-aprendizagem.jpg)
+![Observatório de Aprendizagem](docs/screenshots/observatorio-aprendizagem.png)
 
 ---
 
@@ -136,7 +136,7 @@ Painel psicopedagógico para visualização dos motivos recorrentes nas sinaliza
 
 Tela destinada aos mentores, permitindo visualizar estudantes mentorados, solicitações pendentes, acompanhamentos ativos, apoios concluídos e trilhas recomendadas para cada aluno.
 
-![Painel do Mentor](docs/screenshots/painel-mentor.jpg)
+![Painel do Mentor](docs/screenshots/painel-mentor.png)
 
 ---
 
