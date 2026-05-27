@@ -17,24 +17,331 @@ Este código é uma migration do Laravel que cria a tabela progresso_trilhas, de
 # Sinalizações Pedagogicas
 Este código é uma migration do Laravel que cria a tabela sinalizacoes_pedagogicas, utilizada para registrar alertas ou acompanhamentos pedagógicos relacionados aos usuários. A tabela possui chaves estrangeiras que vinculam cada sinalização a um usuário (usuarios) e a um resultado de triagem (resultados_triagem), ambas com exclusão em cascata para manter a integridade dos dados. Os campos incluem nivel_atencao (enum com valores baixo, moderado ou alto, padrão baixo), motivo (texto explicando a razão da sinalização), origem (enum que indica se a sinalização veio da triagem ou de uma analise_psicopedagogica, padrão triagem) e status (enum que acompanha o andamento: novo, em_acompanhamento ou finalizado, padrão novo). Também são adicionados os timestamps padrão (created_at e updated_at). O método down garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
 # Oportunidades
-Este código é uma migration do Laravel que cria a tabela oportunidades, destinada a registrar eventos, avisos ou competições relevantes para os usuários. A tabela inclui campos como titulo (nome da oportunidade), descricao (texto opcional explicativo), categoria (enum que pode ser olimpiada, competicao ou aviso, com padrão aviso), além de data_inicio e data_fim (datas opcionais para delimitar o período da oportunidade). Também há o campo orientacao (texto opcional com instruções ou recomendações) e ativo (booleano que indica se a oportunidade está disponível, padrão true). Os timestamps padrão (created_at e updated_at) são adicionados automaticamente. O método down garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
 # Quiz
-Este projeto contém o modelo Quiz desenvolvido em Laravel, responsável por representar e gerenciar os dados de questionários na aplicação. A classe utiliza o recurso de HasFactory para facilitar a criação de instâncias em testes e seeds, define a tabela quizzes como base e permite preenchimento em massa dos campos principais como título, descrição, tipo, criador e status de atividade. Além disso, estabelece relacionamentos importantes: um quiz possui várias perguntas, várias respostas e múltiplos resultados de triagem, além de estar vinculado ao seu criador. Esse modelo é a base para manipulação de dados relacionados a quizzes, permitindo consultas, inserções e integrações com outras entidades do sistema.
+
+Este projeto contém o model `Quiz`, desenvolvido em Laravel, responsável por representar e gerenciar os dados de questionários na aplicação.
+
+## Funcionalidades
+
+- Define a tabela `quizzes`
+- Permite preenchimento em massa dos campos principais
+- Utiliza `HasFactory` para testes e seeders
+- Relaciona o quiz com perguntas, respostas, resultados de triagem e criador
+
 # Pergunta
-A model Pergunta representa as perguntas de um quiz no sistema, utilizando o Eloquent ORM do Laravel para facilitar a interação com o banco de dados. A classe define a tabela perguntas, os campos que podem ser preenchidos em massa (quiz_id, enunciado, tipo_resposta, categoria, ordem e ativo) e utiliza o trait HasFactory para permitir a criação de factories em testes e seeders. Além disso, o model possui relacionamentos importantes: cada pergunta pertence a um quiz através do método quiz(), e pode possuir várias respostas relacionadas pelo método respostas(), garantindo a organização e integração das informações dentro do sistema de quizzes.
+
+A model `Pergunta` representa as perguntas de um quiz no sistema, utilizando o Eloquent ORM do Laravel.
+
+## Funcionalidades
+
+- Define a tabela `perguntas`
+- Permite preenchimento dos campos `quiz_id`, `enunciado`, `tipo_resposta`, `categoria`, `ordem` e `ativo`
+- Relaciona cada pergunta a um quiz
+- Relaciona cada pergunta a várias respostas
+
 # Resposta
-A model Resposta representa as respostas fornecidas pelos usuários dentro do sistema de quizzes, utilizando o Eloquent ORM do Laravel para realizar a comunicação com o banco de dados. A classe define a tabela respostas e os campos preenchíveis (usuario_id, quiz_id, pergunta_id, resposta_texto e peso), permitindo o armazenamento das informações relacionadas às respostas dos usuários. Além disso, o model utiliza o trait HasFactory para auxiliar em testes e seeders e possui relacionamentos importantes com outras entidades do sistema: cada resposta pertence a um usuário através do método usuario(), pertence a um quiz pelo método quiz() e está vinculada a uma pergunta específica pelo método pergunta(), garantindo a organização e integridade dos dados no sistema.
-# Resultado Triagem
-A model ResultadoTriagem representa os resultados obtidos a partir das triagens realizadas pelos usuários no sistema, utilizando o Eloquent ORM do Laravel para gerenciar a comunicação com o banco de dados. A classe define a tabela resultados_triagem e os campos preenchíveis, como usuario_id, quiz_id, dificuldade_principal, perfil_aprendizagem, objetivo_principal, nivel_atencao e recomendacao_texto, permitindo armazenar informações importantes sobre o desempenho e perfil do usuário. Além disso, o model utiliza o trait HasFactory para auxiliar em testes e geração de dados fictícios, e possui relacionamentos com outras entidades do sistema: cada resultado pertence a um usuário e a um quiz, além de poder possuir várias recomendações de trilha e sinalizações pedagógicas relacionadas, garantindo a organização das análises e recomendações educacionais dentro da plataforma.
+
+A model `Resposta` representa as respostas fornecidas pelos usuários dentro do sistema de quizzes.
+
+## Funcionalidades
+
+- Define a tabela `respostas`
+- Armazena `usuario_id`, `quiz_id`, `pergunta_id`, `resposta_texto` e `peso`
+- Relaciona a resposta com usuário, quiz e pergunta
+
+# ResultadoTriagem
+
+A model `ResultadoTriagem` representa os resultados obtidos a partir das triagens realizadas pelos usuários.
+
+## Funcionalidades
+
+- Define a tabela `resultados_triagem`
+- Armazena informações como dificuldade principal, perfil de aprendizagem, objetivo principal, nível de atenção e recomendação
+- Relaciona o resultado com usuário e quiz
+- Permite vínculo com recomendações de trilha e sinalizações pedagógicas
+
 # Trilha
-A model Trilha representa as trilhas de aprendizagem disponíveis na plataforma, utilizando o Eloquent ORM do Laravel para facilitar a manipulação dos dados no banco de dados. A classe define a tabela trilhas e os campos preenchíveis (titulo, descricao, disciplina, perfil_indicado, nivel e ativa), responsáveis por armazenar as informações relacionadas às trilhas educacionais oferecidas aos usuários. Além disso, o model utiliza o trait HasFactory, que auxilia na criação de dados para testes e seeders, e possui relacionamentos importantes com outras entidades do sistema: uma trilha pode possuir várias recomendações através do método recomendacoes() e diversos registros de progresso por meio do método progressos(), permitindo acompanhar tanto as indicações pedagógicas quanto a evolução dos usuários dentro da plataforma.
-# Recomendação trilhas
-A model RecomendacaoTrilha representa as recomendações de trilhas de aprendizagem geradas para os usuários dentro da plataforma, utilizando o Eloquent ORM do Laravel para realizar a integração com o banco de dados. A classe define a tabela recomendacoes_trilha e os campos preenchíveis (usuario_id, resultado_triagem_id, trilha_id, origem e status), responsáveis por armazenar informações sobre a recomendação, sua origem e situação atual. Além disso, o model utiliza o trait HasFactory para facilitar testes e geração de dados fictícios e possui relacionamentos importantes com outras entidades do sistema: cada recomendação pertence a um usuário, está vinculada a um resultado de triagem específico e também a uma trilha de aprendizagem, permitindo que o sistema organize e acompanhe as recomendações educacionais personalizadas para cada usuário.
-# Progresso Trilha
-A model ProgressoTrilha representa o acompanhamento do progresso dos usuários nas trilhas de aprendizagem da plataforma, utilizando o Eloquent ORM do Laravel para gerenciar os dados no banco de dados. A classe define a tabela progresso_trilhas e os campos preenchíveis (usuario_id, trilha_id, percentual, concluida e ultima_atividade), responsáveis por armazenar informações sobre o avanço do usuário, o percentual concluído da trilha e a última atividade realizada. Além disso, o model utiliza o trait HasFactory para auxiliar em testes e seeders e possui relacionamentos com outras entidades do sistema: cada registro de progresso pertence a um usuário e está associado a uma trilha específica, permitindo que a plataforma acompanhe a evolução individual de aprendizagem de cada usuário.
-# Sinalização Pedagogica
-A model SinalizacaoPedagogica representa as sinalizações pedagógicas geradas pelo sistema com base nos resultados das triagens dos usuários, utilizando o Eloquent ORM do Laravel para gerenciar a comunicação com o banco de dados. A classe define a tabela sinalizacoes_pedagogicas e os campos preenchíveis (usuario_id, resultado_triagem_id, nivel_atencao, motivo, origem e status), responsáveis por armazenar informações relacionadas às observações pedagógicas e níveis de atenção identificados no processo de análise. Além disso, o model utiliza o trait HasFactory para facilitar testes e geração de dados fictícios e possui relacionamentos importantes com outras entidades do sistema: cada sinalização pertence a um usuário e também está vinculada a um resultado de triagem específico, permitindo acompanhar e organizar intervenções pedagógicas personalizadas dentro da plataforma.
+
+A model `Trilha` representa as trilhas de aprendizagem disponíveis na plataforma.
+
+## Funcionalidades
+
+- Define a tabela `trilhas`
+- Armazena título, descrição, disciplina, perfil indicado, nível e status de atividade
+- Relaciona trilhas com recomendações e progressos dos usuários
+
+# RecomendacaoTrilha
+
+A model `RecomendacaoTrilha` representa as recomendações de trilhas de aprendizagem geradas para os usuários.
+
+## Funcionalidades
+
+- Define a tabela `recomendacoes_trilha`
+- Armazena usuário, resultado de triagem, trilha, origem e status
+- Relaciona a recomendação com usuário, resultado de triagem e trilha
+
+# ProgressoTrilha
+
+A model `ProgressoTrilha` representa o acompanhamento do progresso dos usuários nas trilhas de aprendizagem.
+
+## Funcionalidades
+
+- Define a tabela `progresso_trilhas`
+- Armazena percentual de avanço, conclusão e última atividade
+- Relaciona o progresso com usuário e trilha
+
+# SinalizacaoPedagogica
+
+A model `SinalizacaoPedagogica` representa as sinalizações pedagógicas geradas pelo sistema com base nos resultados das triagens.
+
+## Funcionalidades
+
+- Define a tabela `sinalizacoes_pedagogicas`
+- Armazena usuário, resultado de triagem, nível de atenção, motivo, origem e status
+- Relaciona a sinalização com usuário e resultado de triagem
+
 # Oportunidade
-O model Oportunidade foi desenvolvido no framework Laravel para representar as oportunidades cadastradas no sistema, utilizando o recurso Eloquent ORM para manipulação do banco de dados. A classe está vinculada à tabela oportunidades e possui os campos preenchíveis titulo, descricao, categoria, data_inicio, data_fim, orientacao e ativo, permitindo o cadastro e gerenciamento de oportunidades de forma segura e organizada. O model utiliza a trait HasFactory, facilitando a criação de dados de teste e factories durante o desenvolvimento da aplicação.
+
+O model `Oportunidade` representa as oportunidades cadastradas no sistema.
+
+## Funcionalidades
+
+- Define a tabela `oportunidades`
+- Permite cadastrar título, descrição, categoria, datas, orientação e status de atividade
+- Utiliza `HasFactory` para testes e factories
+
 # Usuario
-O UsuarioSeeder foi desenvolvido para popular automaticamente o banco de dados do sistema com usuários iniciais utilizando o recurso de seeders do Laravel. A classe cria diferentes perfis de acesso, como gestão escolar, psicopedagoga e alunos, facilitando testes, autenticação e desenvolvimento da aplicação. As senhas são criptografadas com Hash::make() para garantir segurança no armazenamento dos dados. Cada usuário possui informações como nome, e-mail, perfil, escola, turma, série e status, permitindo simular o funcionamento real do sistema Comunica Plus durante os testes e validações do projeto.
+
+O `UsuarioSeeder` foi desenvolvido para popular automaticamente o banco de dados com usuários iniciais.
+
+## Funcionalidades
+
+- Cria usuários iniciais para testes
+- Inclui perfis como gestão escolar, psicopedagogo(a) e alunos
+- Criptografa senhas com `Hash::make()`
+- Permite simular autenticação e funcionamento real do sistema
+
+# Configuração do Vite
+
+Responsável por configurar o ambiente frontend da aplicação.
+
+## Funcionalidades
+
+- Integra o React ao Vite
+- Integra o Tailwind CSS ao sistema de build
+- Define os plugins ativos do projeto
+- Melhora a velocidade de desenvolvimento
+- Permite hot reload durante o desenvolvimento
+- Facilita a escalabilidade do frontend
+- Otimiza o build final da aplicação
+
+## Recursos utilizados
+
+- `defineConfig`: estrutura e exporta a configuração principal do Vite
+- Plugin React: adiciona suporte ao React, JSX e Fast Refresh
+- Plugin Tailwind CSS: integra o Tailwind CSS ao processo de build
+
+## Tecnologias
+
+- Vite
+- React
+- Tailwind CSS
+
+# Configuração Vite + React + Tailwind CSS
+
+Responsável por configurar a base global de estilos da aplicação.
+
+## Funcionalidades
+
+- Configura a base global de estilos
+- Define a tipografia padrão do sistema
+- Define cores globais da interface
+- Configura o tema visual dark mode da aplicação
+- Melhora a renderização e a legibilidade dos textos
+- Suaviza fontes em diferentes navegadores
+- Padroniza o dimensionamento dos elementos da interface
+- Remove estilos padrões do navegador
+- Define a estrutura visual principal da aplicação
+- Garante melhor responsividade em diferentes dispositivos
+- Estabelece uma base moderna para React + Vite + Tailwind CSS
+- Melhora a organização visual e a consistência da interface
+- Prepara a aplicação para estilização escalável e otimizada
+
+# Configuração Global de Estilos
+
+Responsável pela padronização visual e estrutural da aplicação.
+
+## Recursos
+
+- Importação do Tailwind CSS
+- Configuração global em `:root`
+- Melhoria de legibilidade e suavização das fontes
+- Reset global com `*`
+- Configuração visual do `body`
+- Tema escuro da interface
+- Responsividade base
+
+# Componente Sidebar
+
+Componente responsável pela navegação lateral da aplicação.
+
+## Funcionalidades
+
+- Navegação entre páginas utilizando `NavLink` do React Router DOM
+- Exibição da logo da aplicação
+- Acesso às páginas Dashboard, Alunos e Professores
+- Destaque automático da rota ativa
+- Organização lateral do menu
+- Melhoria da navegação e da experiência do usuário
+
+## Tecnologias
+
+- React
+- React Router DOM
+- Tailwind CSS
+
+# Topbar Component
+
+Componente responsável pelo topo da página principal do dashboard.
+
+## Funcionalidades
+
+- Exibe o título principal da página
+- Mostra uma descrição do painel
+- Apresenta informações do perfil do usuário
+- Identifica o perfil como `Gestão Escolar`
+
+## Tecnologias
+
+- React
+- Tailwind CSS
+
+# Componente Principal da Aplicação
+
+Responsável por inicializar a aplicação frontend.
+
+## Funcionalidades
+
+- Importa o sistema principal de rotas da aplicação
+- Renderiza o componente `AppRoutes`
+- Controla o carregamento principal da interface
+- Serve como ponto de entrada da aplicação React
+- Permite a exibição das páginas do sistema
+- Centraliza a navegação da aplicação
+- Exporta o componente principal do frontend
+
+# Migration: oportunidades
+
+Este código é uma migration do Laravel que cria a tabela `oportunidades`, destinada a registrar eventos, avisos ou competições relevantes para os usuários.
+
+## Campos principais
+
+- `titulo`: nome da oportunidade;
+- `descricao`: texto opcional explicativo;
+- `categoria`: define o tipo da oportunidade, podendo ser `olimpiada`, `competicao` ou `aviso`, com padrão `aviso`;
+- `data_inicio`: data opcional para início da oportunidade;
+- `data_fim`: data opcional para encerramento da oportunidade;
+- `orientacao`: texto opcional com instruções ou recomendações;
+- `ativo`: indica se a oportunidade está disponível, com padrão `true`;
+- `created_at` e `updated_at`: timestamps adicionados automaticamente.
+
+O método `down()` garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
+
+# StatCard
+
+Componente reutilizável para exibir indicadores e métricas importantes no dashboard.
+
+## Funcionalidades
+
+- Exibição de valor destacado
+- Título e subtítulo
+- Suporte a ícone personalizado
+- Design com sombra e borda colorida
+
+## Tecnologias
+
+- React
+- Tailwind CSS
+
+# fetchApi
+
+Função responsável pela comunicação com a API da aplicação.
+
+## Recursos
+
+- Define a URL base da API
+- Realiza requisições utilizando `fetch`
+- Trata erros de resposta
+- Retorna dados em formato JSON
+
+# getDashboardGestao
+
+Serviço responsável por buscar os dados do dashboard de gestão através da API da aplicação.
+
+## Funcionalidades
+
+- Consumo do endpoint do dashboard
+- Integração com `fetchApi`
+- Organização da camada de serviços
+- Retorno de dados da gestão
+
+# DashboardGestaoPage
+
+Página responsável pelo carregamento e exibição do dashboard de gestão da aplicação.
+
+## Funcionalidades
+
+- Busca de dados da API
+- Controle de loading
+- Tratamento de erros
+- Integração com Sidebar
+- Estrutura principal do dashboard
+
+# DashboardPsicoPage
+
+Página responsável pela exibição do painel psicopedagógico da aplicação.
+
+## Funcionalidades
+
+- Carregamento de dados da API
+- Controle de loading e erros
+- Exibição de métricas psicopedagógicas
+- Visualização de motivos recorrentes
+- Status de acompanhamento dos alunos
+- Integração com Sidebar e StatCard
+
+# AppRoutes
+
+Componente responsável pelo gerenciamento das rotas da aplicação.
+
+## Funcionalidades
+
+- Configuração de navegação com React Router
+- Redirecionamento da página inicial
+- Rotas para dashboard de gestão
+- Rotas para painel psicopedagógico
+- Navegação entre páginas da aplicação
+
+# getDashboardPsicopedagogico
+
+Serviço responsável por buscar os dados do dashboard psicopedagógico através da API.
+
+## Funcionalidades
+
+- Consumo do endpoint psicopedagógico
+- Integração com `fetchApi`
+- Retorno de dados da API
+- Organização dos serviços da aplicação
+
+# getAlunosSinalizadosPage
+
+Página responsável pela visualização detalhada dos alunos sinalizados no painel psicopedagógico.
+
+## Funcionalidades
+
+- Carregamento de dados da API
+- Controle de loading e erros
+- Exibição de métricas dos alunos
+- Listagem detalhada de acompanhamento
+- Visualização de níveis de atenção e status
+- Integração com Sidebar
