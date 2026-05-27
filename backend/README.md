@@ -1,347 +1,418 @@
-# comunica-plus
-MVP do projeto Comunica
-# Migration
-Esta migration cria a tabela usuarios no banco de dados do sistema Comunica Plus, contendo os campos id, nome, email (único), senha, perfil (com valores possíveis: aluno, gestão e psicopedagoga), escola, turma e serie (opcionais), além do campo status (ativo ou inativo, com padrão ativo) e os timestamps created_at e updated_at. Ela define a estrutura básica de usuários do sistema, permitindo o controle de diferentes tipos de acesso e informações acadêmicas associadas, enquanto o método down() realiza a remoção da tabela em caso de rollback da migration.
-# Tabela Quizzes
-Esta migration cria a tabela quizzes no banco de dados do sistema Comunica Plus, contendo os campos id, titulo, descricao (opcional), tipo (com valores possíveis triagem_inicial e psicopedagogico, tendo triagem_inicial como padrão), criado_por (chave estrangeira opcional relacionada ao usuário criador), ativo (booleano com padrão true) e os timestamps created_at e updated_at, além de estabelecer uma chave estrangeira que referencia o campo id da tabela usuarios com regra nullOnDelete, garantindo que, caso o usuário criador seja removido, o campo criado_por seja definido como nulo; o método down() deveria ser responsável por remover a tabela em caso de rollback da migration.
-# Respostas
-Este código é uma migration do Laravel que cria a tabela respostas, responsável por armazenar as respostas dos usuários em quizzes. A tabela possui chaves estrangeiras que relacionam cada resposta a um usuário (usuarios), a um quiz (quizzes) e a uma pergunta específica (perguntas), todas configuradas com exclusão em cascata para manter a integridade referencial. Além disso, inclui os campos resposta_texto (texto da resposta, opcional), peso (valor numérico padrão 0, usado para atribuir pontuação ou relevância) e os timestamps padrão (created_at e updated_at). O método down garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
-# Resultados Triagem
-Este código é uma migration do Laravel que cria a tabela resultados_triagem, usada para armazenar os resultados de uma triagem aplicada a usuários em quizzes. A tabela possui chaves estrangeiras que relacionam cada resultado a um usuário (usuarios) e a um quiz (quizzes), ambas com exclusão em cascata para manter a consistência dos dados. Os campos incluem informações como dificuldade_principal, perfil_aprendizagem e objetivo_principal, além de um nível de atenção definido por um enum (baixo, moderado, alto, com padrão baixo). Também há espaço para recomendações em texto (recomendacao_texto, opcional) e os timestamps padrão (created_at e updated_at). O método down garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
-# Tabela Trilhas
-Este código é uma migration do Laravel que cria a tabela trilhas, destinada a organizar percursos de aprendizagem ou sequências de conteúdos. A tabela inclui campos como titulo (nome da trilha), descricao (texto opcional explicativo), disciplina (área de conhecimento associada) e perfil_indicado (perfil de estudante recomendado). Também define o nível da trilha por meio de um enum (basico ou intermediario, com padrão basico) e um campo booleano ativa para indicar se a trilha está disponível, além dos timestamps padrão (created_at e updated_at). O método down garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
-# Recomendações Trilhas
-Este código é uma migration do Laravel que cria a tabela recomendacoes_trilha, responsável por registrar quais trilhas de aprendizagem são recomendadas a cada usuário. A tabela possui chaves estrangeiras que vinculam a recomendação a um usuário (usuarios), a um resultado de triagem (resultados_triagem) e a uma trilha específica (trilhas), todas com exclusão em cascata para manter a integridade dos dados. Além disso, define os campos origem (enum que indica se a recomendação foi gerada de forma automatica ou manual, com padrão automatica) e status (enum que acompanha o progresso da recomendação: recomendada, iniciada ou concluida, com padrão recomendada). Também inclui os timestamps padrão (created_at e updated_at). O método down garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
-# Progresso Trilhas
-Este código é uma migration do Laravel que cria a tabela progresso_trilhas, destinada a acompanhar o avanço dos usuários em cada trilha de aprendizagem. A tabela possui chaves estrangeiras que relacionam o progresso a um usuário (usuarios) e a uma trilha específica (trilhas), ambas com exclusão em cascata para manter a integridade dos dados. Os campos incluem percentual (inteiro que indica a porcentagem concluída, com padrão 0), concluida (booleano que marca se a trilha foi finalizada, padrão false) e ultima_atividade (texto opcional para registrar a última atividade realizada). Também são adicionados os timestamps padrão (created_at e updated_at). O método down garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
-# Sinalizações Pedagogicas
-Este código é uma migration do Laravel que cria a tabela sinalizacoes_pedagogicas, utilizada para registrar alertas ou acompanhamentos pedagógicos relacionados aos usuários. A tabela possui chaves estrangeiras que vinculam cada sinalização a um usuário (usuarios) e a um resultado de triagem (resultados_triagem), ambas com exclusão em cascata para manter a integridade dos dados. Os campos incluem nivel_atencao (enum com valores baixo, moderado ou alto, padrão baixo), motivo (texto explicando a razão da sinalização), origem (enum que indica se a sinalização veio da triagem ou de uma analise_psicopedagogica, padrão triagem) e status (enum que acompanha o andamento: novo, em_acompanhamento ou finalizado, padrão novo). Também são adicionados os timestamps padrão (created_at e updated_at). O método down garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
-# Oportunidades
-# Quiz
+# Comunica+ — Comunicação, Mentoria e Protagonismo Estudantil
 
-Este projeto contém o model `Quiz`, desenvolvido em Laravel, responsável por representar e gerenciar os dados de questionários na aplicação.
+> Plataforma educacional criada para aproximar estudantes, mentores, gestão escolar e apoio pedagógico, facilitando pedidos de ajuda, acompanhamento de dificuldades, trilhas de aprendizagem e acesso a oportunidades.
 
-## Funcionalidades
+---
 
-- Define a tabela `quizzes`
-- Permite preenchimento em massa dos campos principais
-- Utiliza `HasFactory` para testes e seeders
-- Relaciona o quiz com perguntas, respostas, resultados de triagem e criador
+## Sobre o Projeto
 
-# Pergunta
+O **Comunica+** é uma solução educacional desenvolvida para apoiar estudantes do ensino médio e técnico da rede pública no processo de aprendizagem, orientação e acompanhamento escolar.
 
-A model `Pergunta` representa as perguntas de um quiz no sistema, utilizando o Eloquent ORM do Laravel.
+A proposta nasceu da percepção de que muitos alunos enfrentam dificuldades acadêmicas, emocionais ou de orientação, mas nem sempre conseguem pedir ajuda diretamente. Seja por timidez, falta de um canal adequado ou ausência de acompanhamento individualizado, muitos estudantes acabam passando por dificuldades de forma silenciosa.
 
-## Funcionalidades
+O Comunica+ busca reduzir essa distância por meio de uma plataforma digital que conecta estudantes, mentores, gestão escolar e apoio pedagógico em um ambiente organizado, acessível e funcional.
 
-- Define a tabela `perguntas`
-- Permite preenchimento dos campos `quiz_id`, `enunciado`, `tipo_resposta`, `categoria`, `ordem` e `ativo`
-- Relaciona cada pergunta a um quiz
-- Relaciona cada pergunta a várias respostas
+---
 
-# Resposta
+## Problema Identificado
 
-A model `Resposta` representa as respostas fornecidas pelos usuários dentro do sistema de quizzes.
+Dentro do ambiente escolar, muitos estudantes apresentam dificuldades em disciplinas, dúvidas sobre carreira, desmotivação ou necessidade de orientação. No entanto, nem sempre esses alunos procuram ajuda.
 
-## Funcionalidades
+Entre os principais desafios identificados estão:
 
-- Define a tabela `respostas`
-- Armazena `usuario_id`, `quiz_id`, `pergunta_id`, `resposta_texto` e `peso`
-- Relaciona a resposta com usuário, quiz e pergunta
+- Timidez ou insegurança para pedir apoio diretamente;
+- Falta de um canal simples para registrar dificuldades;
+- Dificuldade da gestão escolar em identificar alunos que precisam de acompanhamento;
+- Pouca integração entre estudante, mentor e equipe pedagógica;
+- Ausência de dados organizados para apoiar decisões educacionais;
+- Falta de acompanhamento individualizado em tempo adequado.
 
-# ResultadoTriagem
+Esses fatores podem contribuir para o desengajamento, baixo rendimento e perda de oportunidades dentro da trajetória escolar do estudante.
 
-A model `ResultadoTriagem` representa os resultados obtidos a partir das triagens realizadas pelos usuários.
+---
 
-## Funcionalidades
+## Solução Proposta
 
-- Define a tabela `resultados_triagem`
-- Armazena informações como dificuldade principal, perfil de aprendizagem, objetivo principal, nível de atenção e recomendação
-- Relaciona o resultado com usuário e quiz
-- Permite vínculo com recomendações de trilha e sinalizações pedagógicas
+O **Comunica+** centraliza o processo de apoio ao estudante em um ecossistema digital com diferentes perfis de acesso.
 
-# Trilha
+A solução permite que o aluno registre suas dificuldades, realize triagens, receba trilhas de aprendizagem e solicite apoio. Ao mesmo tempo, mentores, gestão escolar e apoio pedagógico conseguem acompanhar essas informações de forma organizada.
 
-A model `Trilha` representa as trilhas de aprendizagem disponíveis na plataforma.
+A plataforma atua em três frentes principais:
 
-## Funcionalidades
+### Estudante
 
-- Define a tabela `trilhas`
-- Armazena título, descrição, disciplina, perfil indicado, nível e status de atividade
-- Relaciona trilhas com recomendações e progressos dos usuários
+O estudante pode informar suas dificuldades, acessar trilhas de apoio, visualizar oportunidades e solicitar acompanhamento de maneira mais simples e menos constrangedora.
 
-# RecomendacaoTrilha
+### Mentor
 
-A model `RecomendacaoTrilha` representa as recomendações de trilhas de aprendizagem geradas para os usuários.
+O mentor acompanha alunos, visualiza suas principais dificuldades, analisa trilhas recomendadas e orienta o estudante durante o processo de aprendizagem.
 
-## Funcionalidades
+### Gestão Escolar e Apoio Pedagógico
 
-- Define a tabela `recomendacoes_trilha`
-- Armazena usuário, resultado de triagem, trilha, origem e status
-- Relaciona a recomendação com usuário, resultado de triagem e trilha
+A gestão escolar e os profissionais de apoio pedagógico acompanham indicadores, solicitações e dados gerais para identificar necessidades, organizar intervenções e tomar decisões com mais clareza.
 
-# ProgressoTrilha
+> O Comunica+ não substitui o trabalho pedagógico da escola. Ele atua como uma ferramenta de apoio para tornar o acompanhamento estudantil mais organizado, rápido e acessível.
 
-A model `ProgressoTrilha` representa o acompanhamento do progresso dos usuários nas trilhas de aprendizagem.
+---
 
-## Funcionalidades
+## Público-Alvo
 
-- Define a tabela `progresso_trilhas`
-- Armazena percentual de avanço, conclusão e última atividade
-- Relaciona o progresso com usuário e trilha
+O público principal do Comunica+ são estudantes do ensino médio e técnico da rede pública, especialmente aqueles que precisam de apoio acadêmico, orientação educacional ou acompanhamento mais próximo.
 
-# SinalizacaoPedagogica
+Também fazem parte do público da solução:
 
-A model `SinalizacaoPedagogica` representa as sinalizações pedagógicas geradas pelo sistema com base nos resultados das triagens.
+- Mentores;
+- Professores;
+- Gestão escolar;
+- Profissionais de apoio pedagógico;
+- Psicopedagogos ou psicopedagogas;
+- Equipes responsáveis pelo acompanhamento estudantil.
 
-## Funcionalidades
+---
 
-- Define a tabela `sinalizacoes_pedagogicas`
-- Armazena usuário, resultado de triagem, nível de atenção, motivo, origem e status
-- Relaciona a sinalização com usuário e resultado de triagem
+## Funcionalidades do MVP
 
-# Oportunidade
+O projeto está sendo desenvolvido como um MVP para validação em ambiente de hackathon educacional.
 
-O model `Oportunidade` representa as oportunidades cadastradas no sistema.
+### Implementadas ou em estruturação
 
-## Funcionalidades
+- Estrutura do backend em Laravel;
+- Estrutura da aplicação web em React;
+- Estrutura inicial do aplicativo mobile em Flutter;
+- Cadastro e organização de usuários;
+- Perfis de acesso;
+- Dashboard inicial da gestão;
+- Painel inicial do mentor;
+- Painel psicopedagógico;
+- Tela de alunos sinalizados;
+- Organização inicial de trilhas e dificuldades;
+- Estrutura para triagem estudantil;
+- Base inicial para acompanhamento dos estudantes;
+- Indicadores visuais de dificuldade e atenção pedagógica.
 
-- Define a tabela `oportunidades`
-- Permite cadastrar título, descrição, categoria, datas, orientação e status de atividade
-- Utiliza `HasFactory` para testes e factories
+### Em desenvolvimento
 
-# Usuario
+- Integração completa entre backend, web e mobile;
+- Notificações;
+- Recomendações automáticas de trilhas;
+- Área de oportunidades;
+- Relatórios avançados;
+- Melhorias de acessibilidade;
+- Evolução do painel do estudante;
+- Melhorias visuais nos painéis;
+- Testes com usuários.
 
-O `UsuarioSeeder` foi desenvolvido para popular automaticamente o banco de dados com usuários iniciais.
+---
 
-## Funcionalidades
+## Telas do Sistema
 
-- Cria usuários iniciais para testes
-- Inclui perfis como gestão escolar, psicopedagogo(a) e alunos
-- Criptografa senhas com `Hash::make()`
-- Permite simular autenticação e funcionamento real do sistema
+Abaixo estão algumas telas desenvolvidas para o MVP do Comunica+, demonstrando os principais painéis da plataforma.
 
-# Configuração do Vite
+### Dashboard da Gestão
 
-Responsável por configurar o ambiente frontend da aplicação.
+Tela principal da gestão escolar, com visão geral dos alunos cadastrados, alunos ativos, trilhas recomendadas, atenção pedagógica, panorama de dificuldades e perfis predominantes de aprendizagem.
 
-## Funcionalidades
+![Dashboard da Gestão](docs/screenshots/dashboard-gestao.png)
 
-- Integra o React ao Vite
-- Integra o Tailwind CSS ao sistema de build
-- Define os plugins ativos do projeto
-- Melhora a velocidade de desenvolvimento
-- Permite hot reload durante o desenvolvimento
-- Facilita a escalabilidade do frontend
-- Otimiza o build final da aplicação
+---
 
-## Recursos utilizados
+### Painel de Alunos Sinalizados
 
-- `defineConfig`: estrutura e exporta a configuração principal do Vite
-- Plugin React: adiciona suporte ao React, JSX e Fast Refresh
-- Plugin Tailwind CSS: integra o Tailwind CSS ao processo de build
+Tela voltada ao acompanhamento detalhado dos estudantes que apresentaram sinais de atenção pedagógica, exibindo níveis de prioridade, status de acompanhamento, dificuldade identificada, perfil de aprendizagem e motivo da sinalização.
 
-## Tecnologias
+![Alunos Sinalizados](docs/screenshots/alunos-sinalizados.png)
 
-- Vite
-- React
-- Tailwind CSS
+---
 
-# Configuração Vite + React + Tailwind CSS
+### Observatório de Aprendizagem
 
-Responsável por configurar a base global de estilos da aplicação.
+Painel psicopedagógico para visualização dos motivos recorrentes nas sinalizações, níveis de atenção e status atual dos alunos em acompanhamento.
 
-## Funcionalidades
+![Observatório de Aprendizagem](docs/screenshots/observatorio-aprendizagem.png)
 
-- Configura a base global de estilos
-- Define a tipografia padrão do sistema
-- Define cores globais da interface
-- Configura o tema visual dark mode da aplicação
-- Melhora a renderização e a legibilidade dos textos
-- Suaviza fontes em diferentes navegadores
-- Padroniza o dimensionamento dos elementos da interface
-- Remove estilos padrões do navegador
-- Define a estrutura visual principal da aplicação
-- Garante melhor responsividade em diferentes dispositivos
-- Estabelece uma base moderna para React + Vite + Tailwind CSS
-- Melhora a organização visual e a consistência da interface
-- Prepara a aplicação para estilização escalável e otimizada
+---
 
-# Configuração Global de Estilos
+### Painel do Mentor
 
-Responsável pela padronização visual e estrutural da aplicação.
+Tela destinada aos mentores, permitindo visualizar estudantes mentorados, solicitações pendentes, acompanhamentos ativos, apoios concluídos e trilhas recomendadas para cada aluno.
 
-## Recursos
+![Painel do Mentor](docs/screenshots/painel-mentor.png)
 
-- Importação do Tailwind CSS
-- Configuração global em `:root`
-- Melhoria de legibilidade e suavização das fontes
-- Reset global com `*`
-- Configuração visual do `body`
-- Tema escuro da interface
-- Responsividade base
+---
 
-# Componente Sidebar
+## Perfis de Usuário
 
-Componente responsável pela navegação lateral da aplicação.
+O Comunica+ foi pensado para atender diferentes perfis dentro do ambiente escolar.
 
-## Funcionalidades
+### Estudante
 
-- Navegação entre páginas utilizando `NavLink` do React Router DOM
-- Exibição da logo da aplicação
-- Acesso às páginas Dashboard, Alunos e Professores
-- Destaque automático da rota ativa
-- Organização lateral do menu
-- Melhoria da navegação e da experiência do usuário
+Usuário principal da plataforma. Pode registrar dificuldades, acessar trilhas de apoio, solicitar acompanhamento e visualizar oportunidades.
 
-## Tecnologias
+### Mentor
 
-- React
-- React Router DOM
-- Tailwind CSS
+Responsável por acompanhar estudantes, analisar dificuldades e orientar o aluno em sua jornada de aprendizagem.
 
-# Topbar Component
+### Gestão Escolar
 
-Componente responsável pelo topo da página principal do dashboard.
+Acompanha dados gerais, solicitações, indicadores e informações relevantes para tomada de decisão.
 
-## Funcionalidades
+### Apoio Pedagógico/Psicopedagógico
 
-- Exibe o título principal da página
-- Mostra uma descrição do painel
-- Apresenta informações do perfil do usuário
-- Identifica o perfil como `Gestão Escolar`
+Perfil voltado ao acompanhamento mais específico dos estudantes, com acesso a dados de triagem e informações que auxiliem na identificação de necessidades de apoio.
 
-## Tecnologias
+### Administrador do Sistema
 
-- React
-- Tailwind CSS
+Responsável pela organização geral da plataforma, gerenciamento de usuários, permissões e configurações.
 
-# Componente Principal da Aplicação
+---
 
-Responsável por inicializar a aplicação frontend.
+## Arquitetura da Solução
 
-## Funcionalidades
+A arquitetura do Comunica+ foi organizada em três módulos principais: **Backend**, **Web** e **Mobile**.
 
-- Importa o sistema principal de rotas da aplicação
-- Renderiza o componente `AppRoutes`
-- Controla o carregamento principal da interface
-- Serve como ponto de entrada da aplicação React
-- Permite a exibição das páginas do sistema
-- Centraliza a navegação da aplicação
-- Exporta o componente principal do frontend
+```text
+Comunica+
+├── Backend — Laravel + MySQL + API REST
+│   └── Regras de negócio, autenticação, usuários, triagens e trilhas
+│
+├── Web — React + Vite + Tailwind CSS
+│   └── Painéis da gestão, mentor e apoio pedagógico
+│
+└── Mobile — Flutter
+    └── Aplicativo do estudante
+```
 
-# Migration: oportunidades
+Essa separação permite maior organização, escalabilidade e facilidade de manutenção durante o desenvolvimento do MVP.
 
-Este código é uma migration do Laravel que cria a tabela `oportunidades`, destinada a registrar eventos, avisos ou competições relevantes para os usuários.
+---
 
-## Campos principais
+## Tecnologias Utilizadas
 
-- `titulo`: nome da oportunidade;
-- `descricao`: texto opcional explicativo;
-- `categoria`: define o tipo da oportunidade, podendo ser `olimpiada`, `competicao` ou `aviso`, com padrão `aviso`;
-- `data_inicio`: data opcional para início da oportunidade;
-- `data_fim`: data opcional para encerramento da oportunidade;
-- `orientacao`: texto opcional com instruções ou recomendações;
-- `ativo`: indica se a oportunidade está disponível, com padrão `true`;
-- `created_at` e `updated_at`: timestamps adicionados automaticamente.
+### Backend
 
-O método `down()` garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
+* Laravel
+* PHP
+* MySQL
+* API REST
 
-# StatCard
+### Frontend Web
 
-Componente reutilizável para exibir indicadores e métricas importantes no dashboard.
+* React
+* Vite
+* Tailwind CSS
+* JavaScript
 
-## Funcionalidades
+### Mobile
 
-- Exibição de valor destacado
-- Título e subtítulo
-- Suporte a ícone personalizado
-- Design com sombra e borda colorida
+* Flutter
+* Dart
 
-## Tecnologias
+### Controle de Versão
 
-- React
-- Tailwind CSS
+* Git
+* GitHub
+* Branches de desenvolvimento
+* Pull Requests
+* Commits organizados por tarefa
 
-# fetchApi
+---
 
-Função responsável pela comunicação com a API da aplicação.
+## Estrutura do Repositório
 
-## Recursos
+```text
+comunica-plus/
+├── backend/      # API e regras de negócio em Laravel
+├── web/          # Painéis web em React
+├── mobile/       # Aplicativo do estudante em Flutter
+├── docs/         # Documentações e imagens do projeto
+└── README.md     # Documentação principal
+```
 
-- Define a URL base da API
-- Realiza requisições utilizando `fetch`
-- Trata erros de resposta
-- Retorna dados em formato JSON
+Cada pasta possui uma responsabilidade específica dentro da solução, facilitando o trabalho em equipe e a manutenção do projeto.
 
-# getDashboardGestao
+---
 
-Serviço responsável por buscar os dados do dashboard de gestão através da API da aplicação.
+## Como Executar o Projeto
 
-## Funcionalidades
+Cada módulo do Comunica+ deve ser executado separadamente.
 
-- Consumo do endpoint do dashboard
-- Integração com `fetchApi`
-- Organização da camada de serviços
-- Retorno de dados da gestão
+### 1. Clonar o repositório
 
-# DashboardGestaoPage
+```bash
+git clone https://github.com/GrupoLmd/comunica-plus.git
+cd comunica-plus
+```
 
-Página responsável pelo carregamento e exibição do dashboard de gestão da aplicação.
+### 2. Executar o Backend
 
-## Funcionalidades
+Entre na pasta do backend:
 
-- Busca de dados da API
-- Controle de loading
-- Tratamento de erros
-- Integração com Sidebar
-- Estrutura principal do dashboard
+```bash
+cd backend
+```
 
-# DashboardPsicoPage
+Instale as dependências:
 
-Página responsável pela exibição do painel psicopedagógico da aplicação.
+```bash
+composer install
+```
 
-## Funcionalidades
+Copie o arquivo de ambiente:
 
-- Carregamento de dados da API
-- Controle de loading e erros
-- Exibição de métricas psicopedagógicas
-- Visualização de motivos recorrentes
-- Status de acompanhamento dos alunos
-- Integração com Sidebar e StatCard
+```bash
+cp .env.example .env
+```
 
-# AppRoutes
+Gere a chave da aplicação:
 
-Componente responsável pelo gerenciamento das rotas da aplicação.
+```bash
+php artisan key:generate
+```
 
-## Funcionalidades
+Configure o banco de dados no arquivo `.env`.
 
-- Configuração de navegação com React Router
-- Redirecionamento da página inicial
-- Rotas para dashboard de gestão
-- Rotas para painel psicopedagógico
-- Navegação entre páginas da aplicação
+Depois execute as migrations:
 
-# getDashboardPsicopedagogico
+```bash
+php artisan migrate
+```
 
-Serviço responsável por buscar os dados do dashboard psicopedagógico através da API.
+Inicie o servidor Laravel:
 
-## Funcionalidades
+```bash
+php artisan serve
+```
 
-- Consumo do endpoint psicopedagógico
-- Integração com `fetchApi`
-- Retorno de dados da API
-- Organização dos serviços da aplicação
+O backend ficará disponível em:
 
-# getAlunosSinalizadosPage
+```text
+http://127.0.0.1:8000
+```
 
-Página responsável pela visualização detalhada dos alunos sinalizados no painel psicopedagógico.
+### 3. Executar o Web
 
-## Funcionalidades
+Volte para a raiz do projeto e entre na pasta web:
 
-- Carregamento de dados da API
-- Controle de loading e erros
-- Exibição de métricas dos alunos
-- Listagem detalhada de acompanhamento
-- Visualização de níveis de atenção e status
-- Integração com Sidebar
+```bash
+cd ../web
+```
+
+Instale as dependências:
+
+```bash
+npm install
+```
+
+Inicie o servidor de desenvolvimento:
+
+```bash
+npm run dev
+```
+
+O painel web será executado pelo Vite, geralmente em:
+
+```text
+http://localhost:5173
+```
+
+### 4. Executar o Mobile
+
+Volte para a raiz do projeto e entre na pasta mobile:
+
+```bash
+cd ../mobile
+```
+
+Instale as dependências do Flutter:
+
+```bash
+flutter pub get
+```
+
+Execute o aplicativo:
+
+```bash
+flutter run
+```
+
+---
+
+## Fluxo de Contribuição da Equipe
+
+O desenvolvimento do Comunica+ utiliza GitHub para organização, versionamento e colaboração entre os participantes.
+
+Para manter o repositório organizado, a equipe deve evitar alterações diretas na branch principal.
+
+### Fluxo recomendado
+
+* Criar uma branch para a tarefa;
+* Fazer as alterações necessárias;
+* Realizar commits com mensagens claras;
+* Enviar a branch para o GitHub;
+* Abrir um Pull Request;
+* Revisar as alterações;
+* Integrar à branch principal.
+
+### Exemplos de nomes de branches
+
+```text
+feature/painel-mentor
+feature/dashboard-gestao
+feature/mobile-estudante
+fix/correcao-login
+docs/atualizacao-readme
+```
+
+### Exemplos de mensagens de commit
+
+```text
+feat: cria estrutura inicial do painel do mentor
+fix: corrige rota de login
+docs: atualiza documentação do projeto
+style: ajusta layout da dashboard
+```
+
+Esse fluxo ajuda a demonstrar organização, colaboração e participação real da equipe no desenvolvimento do projeto.
+
+---
+
+## Equipe
+
+O Comunica+ foi desenvolvido por uma equipe de estudantes com responsabilidades distribuídas entre programação, documentação, ideação, apresentação e análise dos desafios escolares.
+
+### Integrantes
+
+* Raniely Inacio de Sousa
+* Marillia Ferreira do Vale
+* Luana Marques de Ananias
+* Luis Miguel Lira Do Nascimento
+* Juciele da Silva Santos
+
+### Orientador
+
+* Mayke Lombardo
+
+### Organização da Equipe
+
+Durante o desenvolvimento do MVP, a equipe foi organizada para garantir participação ativa em diferentes áreas do projeto:
+
+* Desenvolvimento da solução;
+* Organização da documentação;
+* Levantamento do problema;
+* Construção da proposta;
+* Apresentação da ideia;
+* Validação das funcionalidades;
+* Explicação da arquitetura do sistema.
+
+Essa divisão permitiu que cada integrante contribuísse de forma prática para o desenvolvimento e apresentação do Comunica+.
+
+---
+
+## Observação Final
+
+O Comunica+ é mais do que uma plataforma digital. É uma proposta de aproximação entre estudantes e pessoas capazes de ajudá-los.
+
+Ao transformar dificuldades silenciosas em dados visíveis e pedidos de apoio em acompanhamento organizado, o projeto busca contribuir para uma escola mais acolhedora, conectada e preparada para apoiar seus alunos.
+
+
+Ao transformar dificuldades silenciosas em dados visíveis e pedidos de apoio em acompanhamento organizado, o projeto busca contribuir para uma escola mais acolhedora, conectada e preparada para apoiar seus alunos.
