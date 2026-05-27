@@ -17,17 +17,148 @@ Este código é uma migration do Laravel que cria a tabela progresso_trilhas, de
 # Sinalizações Pedagogicas
 Este código é uma migration do Laravel que cria a tabela sinalizacoes_pedagogicas, utilizada para registrar alertas ou acompanhamentos pedagógicos relacionados aos usuários. A tabela possui chaves estrangeiras que vinculam cada sinalização a um usuário (usuarios) e a um resultado de triagem (resultados_triagem), ambas com exclusão em cascata para manter a integridade dos dados. Os campos incluem nivel_atencao (enum com valores baixo, moderado ou alto, padrão baixo), motivo (texto explicando a razão da sinalização), origem (enum que indica se a sinalização veio da triagem ou de uma analise_psicopedagogica, padrão triagem) e status (enum que acompanha o andamento: novo, em_acompanhamento ou finalizado, padrão novo). Também são adicionados os timestamps padrão (created_at e updated_at). O método down garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
 # Oportunidades
-Este código é uma migration do Laravel que cria a tabela oportunidades, destinada a registrar eventos, avisos ou competições relevantes para os usuários. A tabela inclui campos como titulo (nome da oportunidade), descricao (texto opcional explicativo), categoria (enum que pode ser olimpiada, competicao ou aviso, com padrão aviso), além de data_inicio e data_fim (datas opcionais para delimitar o período da oportunidade). Também há o campo orientacao (texto opcional com instruções ou recomendações) e ativo (booleano que indica se a oportunidade está disponível, padrão true). Os timestamps padrão (created_at e updated_at) são adicionados automaticamente. O método down garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
 # Topbar Component
--Componente responsável pelo topo da página principal do dashboard.
--Mostra o título "Visão Geral da Gestão", uma descrição e o -perfil do usuário (Gestão Escolar).
--Funcionalidades
 
--Título principal da página
--Subtítulo descritivo
--Informações do perfil do usuário
+Componente responsável pelo topo da página principal do dashboard.
 
--Tecnologias
+## Funcionalidades
 
--React
--Tailwind CSS
+- Exibe o título principal da página
+- Mostra uma descrição do painel
+- Apresenta informações do perfil do usuário
+- Identifica o perfil como `Gestão Escolar`
+
+## Tecnologias
+
+- React
+- Tailwind CSS
+
+# Componente Principal da Aplicação
+
+Responsável por inicializar a aplicação frontend.
+
+## Funcionalidades
+
+- Importa o sistema principal de rotas da aplicação
+- Renderiza o componente `AppRoutes`
+- Controla o carregamento principal da interface
+- Serve como ponto de entrada da aplicação React
+- Permite a exibição das páginas do sistema
+- Centraliza a navegação da aplicação
+- Exporta o componente principal do frontend
+
+# Migration: oportunidades
+
+Este código é uma migration do Laravel que cria a tabela `oportunidades`, destinada a registrar eventos, avisos ou competições relevantes para os usuários.
+
+## Campos principais
+
+- `titulo`: nome da oportunidade;
+- `descricao`: texto opcional explicativo;
+- `categoria`: define o tipo da oportunidade, podendo ser `olimpiada`, `competicao` ou `aviso`, com padrão `aviso`;
+- `data_inicio`: data opcional para início da oportunidade;
+- `data_fim`: data opcional para encerramento da oportunidade;
+- `orientacao`: texto opcional com instruções ou recomendações;
+- `ativo`: indica se a oportunidade está disponível, com padrão `true`;
+- `created_at` e `updated_at`: timestamps adicionados automaticamente.
+
+O método `down()` garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
+
+# StatCard
+
+Componente reutilizável para exibir indicadores e métricas importantes no dashboard.
+
+## Funcionalidades
+
+- Exibição de valor destacado
+- Título e subtítulo
+- Suporte a ícone personalizado
+- Design com sombra e borda colorida
+
+## Tecnologias
+
+- React
+- Tailwind CSS
+
+# fetchApi
+
+Função responsável pela comunicação com a API da aplicação.
+
+## Recursos
+
+- Define a URL base da API
+- Realiza requisições utilizando `fetch`
+- Trata erros de resposta
+- Retorna dados em formato JSON
+
+# getDashboardGestao
+
+Serviço responsável por buscar os dados do dashboard de gestão através da API da aplicação.
+
+## Funcionalidades
+
+- Consumo do endpoint do dashboard
+- Integração com `fetchApi`
+- Organização da camada de serviços
+- Retorno de dados da gestão
+
+# DashboardGestaoPage
+
+Página responsável pelo carregamento e exibição do dashboard de gestão da aplicação.
+
+## Funcionalidades
+
+- Busca de dados da API
+- Controle de loading
+- Tratamento de erros
+- Integração com Sidebar
+- Estrutura principal do dashboard
+
+# DashboardPsicoPage
+
+Página responsável pela exibição do painel psicopedagógico da aplicação.
+
+## Funcionalidades
+
+- Carregamento de dados da API
+- Controle de loading e erros
+- Exibição de métricas psicopedagógicas
+- Visualização de motivos recorrentes
+- Status de acompanhamento dos alunos
+- Integração com Sidebar e StatCard
+
+# AppRoutes
+
+Componente responsável pelo gerenciamento das rotas da aplicação.
+
+## Funcionalidades
+
+- Configuração de navegação com React Router
+- Redirecionamento da página inicial
+- Rotas para dashboard de gestão
+- Rotas para painel psicopedagógico
+- Navegação entre páginas da aplicação
+
+# getDashboardPsicopedagogico
+
+Serviço responsável por buscar os dados do dashboard psicopedagógico através da API.
+
+## Funcionalidades
+
+- Consumo do endpoint psicopedagógico
+- Integração com `fetchApi`
+- Retorno de dados da API
+- Organização dos serviços da aplicação
+
+# getAlunosSinalizadosPage
+
+Página responsável pela visualização detalhada dos alunos sinalizados no painel psicopedagógico.
+
+## Funcionalidades
+
+- Carregamento de dados da API
+- Controle de loading e erros
+- Exibição de métricas dos alunos
+- Listagem detalhada de acompanhamento
+- Visualização de níveis de atenção e status
+- Integração com Sidebar
