@@ -17,6 +17,25 @@ Este código é uma migration do Laravel que cria a tabela progresso_trilhas, de
 # Sinalizações Pedagogicas
 Este código é uma migration do Laravel que cria a tabela sinalizacoes_pedagogicas, utilizada para registrar alertas ou acompanhamentos pedagógicos relacionados aos usuários. A tabela possui chaves estrangeiras que vinculam cada sinalização a um usuário (usuarios) e a um resultado de triagem (resultados_triagem), ambas com exclusão em cascata para manter a integridade dos dados. Os campos incluem nivel_atencao (enum com valores baixo, moderado ou alto, padrão baixo), motivo (texto explicando a razão da sinalização), origem (enum que indica se a sinalização veio da triagem ou de uma analise_psicopedagogica, padrão triagem) e status (enum que acompanha o andamento: novo, em_acompanhamento ou finalizado, padrão novo). Também são adicionados os timestamps padrão (created_at e updated_at). O método down garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
 # Oportunidades
+# Componente Sidebar
+
+Componente responsável pela navegação lateral da aplicação.
+
+## Funcionalidades
+
+- Navegação entre páginas utilizando `NavLink` do React Router DOM
+- Exibição da logo da aplicação
+- Acesso às páginas Dashboard, Alunos e Professores
+- Destaque automático da rota ativa
+- Organização lateral do menu
+- Melhoria da navegação e da experiência do usuário
+
+## Tecnologias
+
+- React
+- React Router DOM
+- Tailwind CSS
+
 # Topbar Component
 
 Componente responsável pelo topo da página principal do dashboard.
