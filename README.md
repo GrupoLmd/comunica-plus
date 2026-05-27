@@ -17,6 +17,110 @@ Este código é uma migration do Laravel que cria a tabela progresso_trilhas, de
 # Sinalizações Pedagogicas
 Este código é uma migration do Laravel que cria a tabela sinalizacoes_pedagogicas, utilizada para registrar alertas ou acompanhamentos pedagógicos relacionados aos usuários. A tabela possui chaves estrangeiras que vinculam cada sinalização a um usuário (usuarios) e a um resultado de triagem (resultados_triagem), ambas com exclusão em cascata para manter a integridade dos dados. Os campos incluem nivel_atencao (enum com valores baixo, moderado ou alto, padrão baixo), motivo (texto explicando a razão da sinalização), origem (enum que indica se a sinalização veio da triagem ou de uma analise_psicopedagogica, padrão triagem) e status (enum que acompanha o andamento: novo, em_acompanhamento ou finalizado, padrão novo). Também são adicionados os timestamps padrão (created_at e updated_at). O método down garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
 # Oportunidades
+# Quiz
+
+Este projeto contém o model `Quiz`, desenvolvido em Laravel, responsável por representar e gerenciar os dados de questionários na aplicação.
+
+## Funcionalidades
+
+- Define a tabela `quizzes`
+- Permite preenchimento em massa dos campos principais
+- Utiliza `HasFactory` para testes e seeders
+- Relaciona o quiz com perguntas, respostas, resultados de triagem e criador
+
+# Pergunta
+
+A model `Pergunta` representa as perguntas de um quiz no sistema, utilizando o Eloquent ORM do Laravel.
+
+## Funcionalidades
+
+- Define a tabela `perguntas`
+- Permite preenchimento dos campos `quiz_id`, `enunciado`, `tipo_resposta`, `categoria`, `ordem` e `ativo`
+- Relaciona cada pergunta a um quiz
+- Relaciona cada pergunta a várias respostas
+
+# Resposta
+
+A model `Resposta` representa as respostas fornecidas pelos usuários dentro do sistema de quizzes.
+
+## Funcionalidades
+
+- Define a tabela `respostas`
+- Armazena `usuario_id`, `quiz_id`, `pergunta_id`, `resposta_texto` e `peso`
+- Relaciona a resposta com usuário, quiz e pergunta
+
+# ResultadoTriagem
+
+A model `ResultadoTriagem` representa os resultados obtidos a partir das triagens realizadas pelos usuários.
+
+## Funcionalidades
+
+- Define a tabela `resultados_triagem`
+- Armazena informações como dificuldade principal, perfil de aprendizagem, objetivo principal, nível de atenção e recomendação
+- Relaciona o resultado com usuário e quiz
+- Permite vínculo com recomendações de trilha e sinalizações pedagógicas
+
+# Trilha
+
+A model `Trilha` representa as trilhas de aprendizagem disponíveis na plataforma.
+
+## Funcionalidades
+
+- Define a tabela `trilhas`
+- Armazena título, descrição, disciplina, perfil indicado, nível e status de atividade
+- Relaciona trilhas com recomendações e progressos dos usuários
+
+# RecomendacaoTrilha
+
+A model `RecomendacaoTrilha` representa as recomendações de trilhas de aprendizagem geradas para os usuários.
+
+## Funcionalidades
+
+- Define a tabela `recomendacoes_trilha`
+- Armazena usuário, resultado de triagem, trilha, origem e status
+- Relaciona a recomendação com usuário, resultado de triagem e trilha
+
+# ProgressoTrilha
+
+A model `ProgressoTrilha` representa o acompanhamento do progresso dos usuários nas trilhas de aprendizagem.
+
+## Funcionalidades
+
+- Define a tabela `progresso_trilhas`
+- Armazena percentual de avanço, conclusão e última atividade
+- Relaciona o progresso com usuário e trilha
+
+# SinalizacaoPedagogica
+
+A model `SinalizacaoPedagogica` representa as sinalizações pedagógicas geradas pelo sistema com base nos resultados das triagens.
+
+## Funcionalidades
+
+- Define a tabela `sinalizacoes_pedagogicas`
+- Armazena usuário, resultado de triagem, nível de atenção, motivo, origem e status
+- Relaciona a sinalização com usuário e resultado de triagem
+
+# Oportunidade
+
+O model `Oportunidade` representa as oportunidades cadastradas no sistema.
+
+## Funcionalidades
+
+- Define a tabela `oportunidades`
+- Permite cadastrar título, descrição, categoria, datas, orientação e status de atividade
+- Utiliza `HasFactory` para testes e factories
+
+# Usuario
+
+O `UsuarioSeeder` foi desenvolvido para popular automaticamente o banco de dados com usuários iniciais.
+
+## Funcionalidades
+
+- Cria usuários iniciais para testes
+- Inclui perfis como gestão escolar, psicopedagogo(a) e alunos
+- Criptografa senhas com `Hash::make()`
+- Permite simular autenticação e funcionamento real do sistema
+
 # Configuração do Vite
 
 Responsável por configurar o ambiente frontend da aplicação.
