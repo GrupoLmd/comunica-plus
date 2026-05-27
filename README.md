@@ -17,6 +17,20 @@ Este código é uma migration do Laravel que cria a tabela progresso_trilhas, de
 # Sinalizações Pedagogicas
 Este código é uma migration do Laravel que cria a tabela sinalizacoes_pedagogicas, utilizada para registrar alertas ou acompanhamentos pedagógicos relacionados aos usuários. A tabela possui chaves estrangeiras que vinculam cada sinalização a um usuário (usuarios) e a um resultado de triagem (resultados_triagem), ambas com exclusão em cascata para manter a integridade dos dados. Os campos incluem nivel_atencao (enum com valores baixo, moderado ou alto, padrão baixo), motivo (texto explicando a razão da sinalização), origem (enum que indica se a sinalização veio da triagem ou de uma analise_psicopedagogica, padrão triagem) e status (enum que acompanha o andamento: novo, em_acompanhamento ou finalizado, padrão novo). Também são adicionados os timestamps padrão (created_at e updated_at). O método down garante a reversão da migration, removendo a tabela caso seja necessário desfazer a operação.
 # Oportunidades
+# Componente Principal da Aplicação
+
+Responsável por inicializar a aplicação frontend.
+
+## Funcionalidades
+
+- Importa o sistema principal de rotas da aplicação
+- Renderiza o componente `AppRoutes`
+- Controla o carregamento principal da interface
+- Serve como ponto de entrada da aplicação React
+- Permite a exibição das páginas do sistema
+- Centraliza a navegação da aplicação
+- Exporta o componente principal do frontend
+
 # Migration: oportunidades
 
 Este código é uma migration do Laravel que cria a tabela `oportunidades`, destinada a registrar eventos, avisos ou competições relevantes para os usuários.
